@@ -6,6 +6,13 @@ function Weather() {
   const [weather, setWeather] = useState({});
   const [loaded, setLoaded] = useState(false);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    const apiKey = "ccc792286ba9e94ddc1b511631ffdc46";
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(handleResponse);
+  }
+
   function handleResponse(response) {
     setLoaded(true);
     console.log(response);
@@ -16,13 +23,6 @@ function Weather() {
       wind: response.data.wind.speed,
       icon: ` http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
     });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const apiKey = "ccc792286ba9e94ddc1b511631ffdc46";
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(handleResponse);
   }
 
   function getCity(e) {
@@ -53,7 +53,7 @@ function Weather() {
       </div>
     );
   } else {
-    return { form };
+    return <div>{form}</div>;
   }
 }
 
