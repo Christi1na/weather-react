@@ -61,7 +61,7 @@ export default function Weather() {
       <div className="wrapper">
         <form className="row mb-4" id="form" onSubmit={handleSubmit}>
           <div className="col-6 ">
-            <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" onChange={getCity} />
+            <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" autoFocus="on" onChange={getCity} />
           </div>
           <div className="col-3 ">
             <input type="submit" className="form-control btn btn-primary" value="Search" />
