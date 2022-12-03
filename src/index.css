@@ -1,13 +1,99 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.App {
+  font-family: sans-serif;
+  /* text-align: center; */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  height: 100vh;
+  position: relative;
+  background-color: #eaf6f6;
+}
+
+.container {
+  max-width: 800px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wrapper {
+  background-color: #fff;
+  padding: 35px;
+  border: 1px solid rgb(182, 182, 182);
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+.card-text,
+.card-title {
+  text-align: left;
+}
+
+.card-text {
+  margin: 0;
+}
+
+.links {
+  display: inline-block;
+  font-size: 50%;
+  vertical-align: top;
+}
+
+.link {
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.open-source {
+  text-align: center;
+}
+
+#description::first-letter {
+  text-transform: capitalize;
+}
+
+.active {
+  color: #111;
+  cursor: default;
+}
+.active:hover {
+  color: #111;
+}
+
+.weather-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.temperature {
+  margin-bottom: 0;
+}
+
+#humidity,
+#wind {
+  color: red;
+}
+
+.card {
+  height: 100%;
+}
+
+.weather-forecast-row {
+  justify-content: center;
+}
+
+.weather-forecast-content {
+  text-align: center;
+}
+
+.weather-forecast-date {
+  font-size: 18px;
+  color: #111;
+  opacity: 0.5;
+}
+
+.weather-forecast-temperature-min {
+  opacity: 0.5;
 }
