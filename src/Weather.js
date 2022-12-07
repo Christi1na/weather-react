@@ -57,68 +57,60 @@ export default function Weather() {
   }
 
   return (
-    <div className="container">
-      <div className="wrapper">
-        <form className="row mb-4" id="form" onSubmit={handleSubmit}>
-          <div className="col-6 ">
-            <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" autoFocus="on" onChange={getCity} />
-          </div>
-          <div className="col-3 ">
-            <input type="submit" className="form-control btn btn-primary" value="Search" />
-          </div>
-          <div className="col-3 ">
-            <button className="form-control btn btn-success" id="current-location-button">
-              Current
-            </button>
-          </div>
-        </form>
-        <div className="row mb-4">
-          <div className="col-7">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title">
-                  <span id="city">{city}</span>
-                </h2>
-                <p className="card-text">
-                  Last updated:
-                  <span> {days[day]}</span>
-                  <span> {hours}</span>:<span>{minutes}</span>
-                </p>
+    <div className="wrapper">
+      <form className="row mb-4" id="form" onSubmit={handleSubmit}>
+        <div className="col-6 ">
+          <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" autoFocus="on" onChange={getCity} />
+        </div>
+        <div className="col-3 ">
+          <input type="submit" className="form-control btn btn-primary" value="Search" />
+        </div>
+        <div className="col-3 ">
+          <button className="form-control btn btn-success" id="current-location-button">
+            Current
+          </button>
+        </div>
+      </form>
+      <div className="row mb-4">
+        <div className="col-7">
+          <div className="card">
+            <div className="card-body">
+              <h2 className="card-title">
+                <span id="city">{city}</span>
+              </h2>
+              <p className="card-text">
+                Last updated:
+                <span> {days[day]}</span>
+                <span> {hours}</span>:<span>{minutes}</span>
+              </p>
 
-                <p className="card-text">
-                  Humidity: <span id="humidity">{weather.humidity}%</span>, Wind:
-                  <span id="wind"> {weather.wind}km/h</span>
-                </p>
-                <p className="card-text" id="description"></p>
-              </div>
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="card">
-              <div className="card-body weather-info">
-                <img id="icon" src={weather.icon} alt="" />
-                <h1 className="card-title temperature">
-                  <span id="temperature">{weather.temperature}</span>
-                  <span className="links">
-                    <a className="link active" id="celsius-link" href="/">
-                      °C
-                    </a>{" "}
-                    |
-                    <a className="link" id="fahrenheit-link" href="/">
-                      °F
-                    </a>
-                  </span>
-                </h1>
-              </div>
+              <p className="card-text">
+                Humidity: <span id="humidity">{weather.humidity}%</span>, Wind:
+                <span id="wind"> {weather.wind}km/h</span>
+              </p>
+              <p className="card-text" id="description"></p>
             </div>
           </div>
         </div>
-      </div>
-      <div className="open-source">
-        <a href="https://github.com/Christi1na/weather-react" target="_blank" rel="noopener noreferrer">
-          Open-source code
-        </a>
-        <span>, by Kristina Astaturian</span>
+        <div className="col-5">
+          <div className="card">
+            <div className="card-body weather-info">
+              <img id="icon" src={weather.icon} alt="" />
+              <h1 className="card-title temperature">
+                <span id="temperature">{weather.temperature}</span>
+                <span className="links">
+                  <a className="link active" id="celsius-link" href="/">
+                    °C
+                  </a>{" "}
+                  |
+                  <a className="link" id="fahrenheit-link" href="/">
+                    °F
+                  </a>
+                </span>
+              </h1>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
