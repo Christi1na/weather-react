@@ -1,5 +1,6 @@
 import React from "react";
 import FormattedDate from "./FormattedDate";
+import WeatherTemperature from "./WeatherTemperature";
 
 export default function WeatherInfo({ weather }) {
   return (
@@ -24,18 +25,7 @@ export default function WeatherInfo({ weather }) {
         <div className="card">
           <div className="card-body weather-info">
             <img id="icon" src={weather.icon} alt="" />
-            <h1 className="card-title temperature">
-              <span id="temperature">{weather.temperature}</span>
-              <span className="links">
-                <a className="link active" id="celsius-link" href="/">
-                  °C
-                </a>{" "}
-                |
-                <a className="link" id="fahrenheit-link" href="/">
-                  °F
-                </a>
-              </span>
-            </h1>
+            <WeatherTemperature temperature={weather.temperature} />
           </div>
         </div>
       </div>
