@@ -8,18 +8,15 @@ export default function Weather(props) {
   const [city, setCity] = useState(props.defaultCity);
   const [weather, setWeather] = useState({ ready: false });
 
-  // function getCurrentWeather(response) {}
-
-  // function getCoordinates(response) {
-  //   const lat = response.coords.latitude;
-  //   const lon = response.coords.longitude;
-  //   axios
-  //     .get(
-  //       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
-  //     )
-  //     .then(getCurrentWeather);
-  // }
-  // navigator.geolocation.getCurrentPosition(getCoordinates);
+  function displayCurrentWeather(e) {
+    e.preventDefault();
+    function getCoordinates(response) {
+      const lat = response.coords.latitude;
+      const lon = response.coords.longitude;
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`).then(handleResponse);
+    }
+    navigator.geolocation.getCurrentPosition(getCoordinates);
+  }
 
   function handleResponse(response) {
     setWeather({
@@ -40,7 +37,6 @@ export default function Weather(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    // setCity(cityName);
     getApiUrl();
   }
 
@@ -52,19 +48,21 @@ export default function Weather(props) {
     return (
       <div className="">
         <div className="wrapper">
-          <form className="row mb-4" id="form" onSubmit={handleSubmit}>
-            <div className="col-6 ">
-              <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" autoFocus="on" onChange={getCity} />
-            </div>
-            <div className="col-3 ">
-              <input type="submit" className="form-control btn btn-primary" value="Search" />
-            </div>
-            <div className="col-3 ">
-              <button className="form-control btn btn-success" id="current-location-button">
+          <div className="row">
+            <form className="row mb-4 col-9" id="form" onSubmit={handleSubmit}>
+              <div className="col-8 ">
+                <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" autoFocus="on" onChange={getCity} />
+              </div>
+              <div className="col-4 ">
+                <input type="submit" className="form-control btn btn-primary" value="Search" />
+              </div>
+            </form>
+            <div className="col-3">
+              <button className="form-control btn btn-success" id="current-location-button" onClick={displayCurrentWeather}>
                 Current
               </button>
             </div>
-          </form>
+          </div>
           <WeatherInfo weather={weather} />
         </div>
         <div className="open-source">
