@@ -1,19 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import FormattedDate from "./FormattedDate";
 
 export default function Weather() {
   const apiKey = "5e87f4ecb5ef263ffd194d9c88ca4f24";
   const [city, setCity] = useState("Dnipro");
   const [weather, setWeather] = useState({ temperature: -2, humidity: 58, wind: 6 });
-
-  const date = new Date();
-  const hours = date.getHours();
-  let minutes = String(date.getMinutes());
-  if (minutes.length === 1) {
-    minutes = `0${minutes}`;
-  }
-  const day = date.getDay();
-  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   // function getCurrentWeather(response) {}
 
@@ -78,11 +70,7 @@ export default function Weather() {
               <h2 className="card-title">
                 <span id="city">{city}</span>
               </h2>
-              <p className="card-text">
-                Last updated:
-                <span> {days[day]}</span>
-                <span> {hours}</span>:<span>{minutes}</span>
-              </p>
+              <FormattedDate />
 
               <p className="card-text">
                 Humidity: <span id="humidity">{weather.humidity}%</span>, Wind:
