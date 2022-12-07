@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import FormattedDate from "./FormattedDate";
+import WeatherInfo from "./WeatherInfo";
 
-export default function Weather() {
+export default function Weather(props) {
   const apiKey = "5e87f4ecb5ef263ffd194d9c88ca4f24";
-  const [city, setCity] = useState("Dnipro");
-  const [weather, setWeather] = useState({ temperature: -2, humidity: 58, wind: 6 });
+  const [city, setCity] = useState(props.defaultCity);
+  const [weather, setWeather] = useState({ ready: false });
 
   // function getCurrentWeather(response) {}
 
@@ -21,8 +21,9 @@ export default function Weather() {
   // navigator.geolocation.getCurrentPosition(getCoordinates);
 
   function handleResponse(response) {
-    setCity(response.data.name);
     setWeather({
+      ready: true,
+      city: response.data.name,
       temperature: Math.round(response.data.main.temp),
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
@@ -30,7 +31,7 @@ export default function Weather() {
     });
   }
 
-  function getApiUrl(city) {
+  function getApiUrl() {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(handleResponse);
   }
@@ -38,68 +39,34 @@ export default function Weather() {
   function handleSubmit(event) {
     event.preventDefault();
     // setCity(cityName);
-    getApiUrl(cityName);
+    getApiUrl();
   }
-
-  let cityName;
 
   function getCity(e) {
-    e.preventDefault();
-    cityName = e.target.value;
+    setCity(e.target.value);
   }
 
-  return (
-    <div className="wrapper">
-      <form className="row mb-4" id="form" onSubmit={handleSubmit}>
-        <div className="col-6 ">
-          <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" autoFocus="on" onChange={getCity} />
-        </div>
-        <div className="col-3 ">
-          <input type="submit" className="form-control btn btn-primary" value="Search" />
-        </div>
-        <div className="col-3 ">
-          <button className="form-control btn btn-success" id="current-location-button">
-            Current
-          </button>
-        </div>
-      </form>
-      <div className="row mb-4">
-        <div className="col-7">
-          <div className="card">
-            <div className="card-body">
-              <h2 className="card-title">
-                <span id="city">{city}</span>
-              </h2>
-              <FormattedDate />
-
-              <p className="card-text">
-                Humidity: <span id="humidity">{weather.humidity}%</span>, Wind:
-                <span id="wind"> {weather.wind}km/h</span>
-              </p>
-              <p className="card-text" id="description"></p>
-            </div>
+  if (weather.ready) {
+    return (
+      <div className="wrapper">
+        <form className="row mb-4" id="form" onSubmit={handleSubmit}>
+          <div className="col-6 ">
+            <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" autoFocus="on" onChange={getCity} />
           </div>
-        </div>
-        <div className="col-5">
-          <div className="card">
-            <div className="card-body weather-info">
-              <img id="icon" src={weather.icon} alt="" />
-              <h1 className="card-title temperature">
-                <span id="temperature">{weather.temperature}</span>
-                <span className="links">
-                  <a className="link active" id="celsius-link" href="/">
-                    °C
-                  </a>{" "}
-                  |
-                  <a className="link" id="fahrenheit-link" href="/">
-                    °F
-                  </a>
-                </span>
-              </h1>
-            </div>
+          <div className="col-3 ">
+            <input type="submit" className="form-control btn btn-primary" value="Search" />
           </div>
-        </div>
+          <div className="col-3 ">
+            <button className="form-control btn btn-success" id="current-location-button">
+              Current
+            </button>
+          </div>
+        </form>
+        <WeatherInfo weather={weather} />
       </div>
-    </div>
-  );
+    );
+  } else {
+    getApiUrl();
+    return "Loading...";
+  }
 }
