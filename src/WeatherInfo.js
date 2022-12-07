@@ -17,7 +17,9 @@ export default function WeatherInfo({ weather }) {
               Humidity: <span id="humidity">{weather.humidity}%</span>, Wind:
               <span id="wind"> {weather.wind}km/h</span>
             </p>
-            <p className="card-text" id="description"></p>
+            <p className="card-text text-capitalize" id="description">
+              {weather.description}
+            </p>
           </div>
         </div>
       </div>

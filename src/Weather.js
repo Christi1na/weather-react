@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import WeatherInfo from "./WeatherInfo";
+import { RotatingLines } from "react-loader-spinner";
 
 export default function Weather(props) {
   const apiKey = "5e87f4ecb5ef263ffd194d9c88ca4f24";
@@ -24,6 +25,7 @@ export default function Weather(props) {
     setWeather({
       ready: true,
       city: response.data.name,
+      description: response.data.weather[0].description,
       temperature: Math.round(response.data.main.temp),
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
@@ -48,25 +50,37 @@ export default function Weather(props) {
 
   if (weather.ready) {
     return (
-      <div className="wrapper">
-        <form className="row mb-4" id="form" onSubmit={handleSubmit}>
-          <div className="col-6 ">
-            <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" autoFocus="on" onChange={getCity} />
-          </div>
-          <div className="col-3 ">
-            <input type="submit" className="form-control btn btn-primary" value="Search" />
-          </div>
-          <div className="col-3 ">
-            <button className="form-control btn btn-success" id="current-location-button">
-              Current
-            </button>
-          </div>
-        </form>
-        <WeatherInfo weather={weather} />
+      <div className="">
+        <div className="wrapper">
+          <form className="row mb-4" id="form" onSubmit={handleSubmit}>
+            <div className="col-6 ">
+              <input type="search" className="form-control" id="input-text" placeholder="City name" autoComplete="off" autoFocus="on" onChange={getCity} />
+            </div>
+            <div className="col-3 ">
+              <input type="submit" className="form-control btn btn-primary" value="Search" />
+            </div>
+            <div className="col-3 ">
+              <button className="form-control btn btn-success" id="current-location-button">
+                Current
+              </button>
+            </div>
+          </form>
+          <WeatherInfo weather={weather} />
+        </div>
+        <div className="open-source">
+          <a href="https://github.com/Christi1na/weather-react" target="_blank" rel="noopener noreferrer">
+            Open-source code
+          </a>
+          <span>, by Kristina Astaturian</span>
+        </div>
       </div>
     );
   } else {
     getApiUrl();
-    return "Loading...";
+    return (
+      <div className="text-center">
+        <RotatingLines strokeColor="green" strokeWidth="5" animationDuration="0.75" width="96" visible={true} />
+      </div>
+    );
   }
 }
