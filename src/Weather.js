@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import WeatherInfo from "./WeatherInfo";
+import WeatherForecast from "./WeatherForecast";
 import { RotatingLines } from "react-loader-spinner";
 
 export default function Weather(props) {
@@ -64,6 +65,7 @@ export default function Weather(props) {
             </div>
           </div>
           <WeatherInfo weather={weather} />
+          <WeatherForecast weather={weather} />
         </div>
         <div className="open-source">
           <a href="https://github.com/Christi1na/weather-react" target="_blank" rel="noopener noreferrer">
