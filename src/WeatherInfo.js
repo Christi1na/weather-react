@@ -26,7 +26,7 @@ export default function WeatherInfo({ weather }) {
       <div className="col-5">
         <div className="card">
           <div className="card-body weather-info">
-            <img id="icon" src={weather.icon} alt="" />
+            <img id="icon" src={weather.icon} alt={weather.description} title={weather.description} />
             <WeatherTemperature temperature={weather.temperature} />
           </div>
         </div>

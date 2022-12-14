@@ -8,6 +8,7 @@ export default function Weather(props) {
   const apiKey = "5e87f4ecb5ef263ffd194d9c88ca4f24";
   const [city, setCity] = useState(props.defaultCity);
   const [weather, setWeather] = useState({ ready: false });
+  const [forecast, setForecast] = useState({ isInit: false });
 
   function displayCurrentWeather(e) {
     e.preventDefault();
@@ -15,6 +16,7 @@ export default function Weather(props) {
       const lat = response.coords.latitude;
       const lon = response.coords.longitude;
       axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`).then(handleResponse);
+      axios.get(`https://api.shecodes.io/weather/v1/forecast?lon=${lon}&lat=${lat}&key=0a61o14eb1fedf4ec084dt130b222342`).then(handleForecastResponse);
     }
     navigator.geolocation.getCurrentPosition(getCoordinates);
   }
@@ -28,6 +30,8 @@ export default function Weather(props) {
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
       icon: ` http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      lat: response.data.coord.lat,
+      lon: response.data.coord.lon,
     });
   }
 
@@ -36,9 +40,32 @@ export default function Weather(props) {
     axios.get(apiUrl).then(handleResponse);
   }
 
+  function handleForecastResponse(response) {
+    setForecast({
+      isInit: true,
+      days: response.data.daily,
+    });
+  }
+
+  function forecastApiUrl() {
+    axios.get(`https://api.shecodes.io/weather/v1/forecast?lon=${weather.lon}&lat=${weather.lat}&key=0a61o14eb1fedf4ec084dt130b222342`).then(handleForecastResponse);
+  }
+
+  async function getData() {
+    const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+    const weatherJson = await weatherResponse.json();
+    const forecastResponse = await fetch(`https://api.shecodes.io/weather/v1/forecast?lon=${weatherJson.coord.lon}&lat=${weatherJson.coord.lat}&key=0a61o14eb1fedf4ec084dt130b222342`);
+    const forecastJson = await forecastResponse.json();
+    setForecast({
+      isInit: true,
+      days: forecastJson.daily,
+    });
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     getApiUrl();
+    getData();
   }
 
   function getCity(e) {
@@ -65,9 +92,9 @@ export default function Weather(props) {
             </div>
           </div>
           <WeatherInfo weather={weather} />
-          <WeatherForecast weather={weather} />
+          <WeatherForecast weather={weather} forecastApiUrl={forecastApiUrl} forecast={forecast} />
         </div>
-        <div className="open-source">
+        <div className="open-source mt-3">
           <a href="https://github.com/Christi1na/weather-react" target="_blank" rel="noopener noreferrer">
             Open-source code
           </a>
